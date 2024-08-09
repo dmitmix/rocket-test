@@ -1,67 +1,128 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Каталог товаров API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Этот проект представляет собой API для управления каталогом товаров. API позволяет просматривать и фильтровать товары по их свойствам, а также поддерживает пагинацию.
 
-## About Laravel
+## Стек технологий
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   **Фреймворк:** Laravel 10
+-   **База данных:** MySQL
+-   **Язык:** PHP 8.3
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Функциональность
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   **Каталог товаров:** Управление товарами с их названиями, ценами и количеством.
+-   **Свойства товаров:** Возможность добавления произвольных свойств (например, цвет, размер, материал) к товарам.
+-   **Фильтрация товаров:** Возможность фильтрации товаров по их свойствам.
+-   **Пагинация:** API поддерживает пагинацию с выводом 40 товаров на страницу.
 
-## Learning Laravel
+## Установка и запуск
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1. Клонирование репозитория
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```bash
+git clone https://github.com/ваш-репозиторий/rocket-test.git
+cd rocket-test
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 2. Установка зависимостей
 
-## Laravel Sponsors
+Убедитесь, что на вашем компьютере установлен Composer. Затем выполните команду:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+composer install
+```
 
-### Premium Partners
+### 3. Настройка окружения
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Скопируйте файл `.env.example` в `.env` и отредактируйте его, указав параметры подключения к базе данных:
 
-## Contributing
+```bash
+cp .env.example .env
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Отредактируйте `.env`, добавив свои параметры базы данных:
 
-## Code of Conduct
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=rocket_test
+DB_USERNAME=your_db_user
+DB_PASSWORD=your_db_password
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 4. Генерация ключа приложения
 
-## Security Vulnerabilities
+```bash
+php artisan key:generate
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 5. Миграции и сидеры
 
-## License
+Для создания таблиц в базе данных и заполнения их тестовыми данными выполните команды:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# rocket-test
+```bash
+php artisan migrate
+php artisan db:seed
+```
+
+### 6. Запуск сервера
+
+Запустите локальный сервер:
+
+```bash
+php artisan serve
+```
+
+API будет доступно по адресу: `http://127.0.0.1:8000`
+
+## Использование API
+
+### Получение списка товаров с фильтрацией и пагинацией
+
+-   **Endpoint:** `GET /api/products`
+-   **Пример запроса с фильтрацией:** `http://127.0.0.1:8000/api/products?properties[Size]=red`
+
+### Пример ответа
+
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "Product 1",
+            "price": "100.00",
+            "quantity": 10,
+            "properties": [
+                {
+                    "name": "Size",
+                    "value": "Large"
+                },
+                {
+                    "name": "Color",
+                    "value": "Red"
+                }
+            ]
+        }
+    ],
+    "links": {
+        "first": "http://127.0.0.1:8000/api/products?page=1",
+        "last": "http://127.0.0.1:8000/api/products?page=3",
+        "prev": null,
+        "next": "http://127.0.0.1:8000/api/products?page=2"
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 3,
+        "path": "http://127.0.0.1:8000/api/products",
+        "per_page": 40,
+        "to": 40,
+        "total": 120
+    }
+}
+```
+
+### Примечание
+
+Данный проект был выполнен в качестве тестового задания на должность php-разработчика в компанию Rocket Science
